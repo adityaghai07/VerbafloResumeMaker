@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Preview</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            color: #0077B5;
+        }
+        .preview-container {
+            border: 1px solid #ccc;
+            padding: 15px;
+            margin-top: 20px;
+            background-color: #f9f9f9;
+        }
+        a {
+            display: inline-block;
+            margin-top: 15px;
+            background-color: #0077B5;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Resume Preview</h1>
+    
+    <div class="preview-container">
+        {{ resume_html|safe }}
+    </div>
+
+    <a href="{{ url_for('download_file', filename=download_link) }}">Download HTML Resume</a>
+</body>
+</html>
