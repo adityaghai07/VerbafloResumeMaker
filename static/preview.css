@@ -25,3 +25,31 @@ a {
     text-decoration: none;
     border-radius: 5px;
 }
+
+.download-button {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* .download-button:hover {
+    background-color: #45a049;
+}
+
+.download-button:active {
+    background-color: #3e8e41;
+}
+
+.button-container {
+    margin-top: 20px;
+    text-align: center;
+} */
