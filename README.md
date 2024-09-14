@@ -1,12 +1,21 @@
-# Verbaflo LinkedIn PDF to HTML Resume Converter
+# VerbaFlo Resume Maker
 
 This web application converts LinkedIn PDF profiles into HTML resumes using OpenAI's GPT model.
+
+
+
+
+### Deployed on Vercel: [link](https://verbaflo-resume-maker.vercel.app/)
+
+Create and download professional resumes easily.
+
 
 ## Features
 
 - Upload LinkedIn PDF profiles
 - Extract text from PDF files
 - Generate HTML resumes using OpenAI's GPT model
+- Choose from various styles.
 - Simple and intuitive user interface
 
 ## Requirements
@@ -17,7 +26,7 @@ This web application converts LinkedIn PDF profiles into HTML resumes using Open
 - OpenAI Python library
 - python-dotenv
 
-## Installation
+## Installation (local setup)
 
 1. Clone this repository:
    ```
@@ -52,7 +61,7 @@ This web application converts LinkedIn PDF profiles into HTML resumes using Open
 
 ## Deployment
 
-This application is deployed to platforms like Vercel or GitHub Pages. 
+This application is deployed on Vercel. [VerbaFlo Resume Maker](https://verbaflo-resume-maker.vercel.app/)
 
 ## License
 
