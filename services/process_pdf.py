@@ -11,12 +11,6 @@ client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 
 def process_pdf(file_stream, style):
-    
-    # with open(filepath, 'rb') as file:
-    #     reader = PyPDF2.PdfReader(file)
-    #     text = ""
-    #     for page in reader.pages:
-    #         text += page.extract_text()
 
     reader = PyPDF2.PdfReader(file_stream)
     text = ""

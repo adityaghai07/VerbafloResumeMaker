@@ -30,25 +30,25 @@ def upload_file():
             return 'No selected file'
 
         if file and allowed_file(file.filename):
-            # Read file into memory
+            
             file_stream = io.BytesIO(file.read())
             
             resume_html = process_pdf(file_stream, style)
             
-            # Instead of writing to a file, we'll render the HTML directly
+    
             return render_template('preview.html', resume_html=resume_html)
     
     return render_template('upload.html')
 
 @app.route('/download')
 def download_file():
-    # Retrieve the HTML content from the query parameter
+    
     html_content = request.args.get('html', '')
     
-    # Create a response with the HTML content
+    
     response = make_response(html_content)
     
-    # Set the appropriate headers for file download
+    
     response.headers["Content-Disposition"] = "attachment; filename=resume.html"
     response.headers["Content-Type"] = "text/html"
     
