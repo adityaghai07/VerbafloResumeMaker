@@ -5,6 +5,7 @@ import PyPDF2
 from openai import OpenAI
 from services.process_pdf import process_pdf
 from dotenv import load_dotenv
+import io
 
 load_dotenv()
 
@@ -35,13 +36,17 @@ def upload_file():
         file = request.files['file']
         if file.filename == '':
             return 'No selected file'
+        # if file and allowed_file(file.filename):
+        #     filename = secure_filename(file.filename)
+        #     filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        #     file.save(filepath)
+
         if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-            file.save(filepath)
+            # Read file into memory
+            file_stream = io.BytesIO(file.read())
             
             
-            resume_html = process_pdf(filepath, style)
+            resume_html = process_pdf(file_stream, style)
             
             
             output_filename = 'resume_output.html'
