@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, send_file
+from flask import Flask, request, render_template, send_file, make_response
 import os
 from werkzeug.utils import secure_filename
 import PyPDF2
@@ -13,14 +13,7 @@ client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 app = Flask(__name__)
 
-
-app.config['UPLOAD_FOLDER'] = 'uploads/'
-app.config['GENERATED_FOLDER'] = 'generated/'
 app.config['ALLOWED_EXTENSIONS'] = {'pdf'}
-
-
-if not os.path.exists(app.config['GENERATED_FOLDER']):
-    os.makedirs(app.config['GENERATED_FOLDER'])
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
@@ -28,7 +21,6 @@ def allowed_file(filename):
 @app.route('/', methods=['GET', 'POST'])
 def upload_file():
     if request.method == 'POST':
-        
         style = request.form.get('style')
 
         if 'file' not in request.files:
@@ -36,34 +28,31 @@ def upload_file():
         file = request.files['file']
         if file.filename == '':
             return 'No selected file'
-        # if file and allowed_file(file.filename):
-        #     filename = secure_filename(file.filename)
-        #     filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-        #     file.save(filepath)
 
         if file and allowed_file(file.filename):
             # Read file into memory
             file_stream = io.BytesIO(file.read())
             
-            
             resume_html = process_pdf(file_stream, style)
             
-            
-            output_filename = 'resume_output.html'
-            output_filepath = os.path.join(app.config['GENERATED_FOLDER'], output_filename)
-            with open(output_filepath, 'w') as html_file:
-                html_file.write(resume_html)
-            
-            return render_template('preview.html', resume_html=resume_html, download_link=output_filename)
+            # Instead of writing to a file, we'll render the HTML directly
+            return render_template('preview.html', resume_html=resume_html)
     
     return render_template('upload.html')
 
-
-
-@app.route('/download/<filename>')
-def download_file(filename):
-    file_path = os.path.join(app.config['GENERATED_FOLDER'], filename)
-    return send_file(file_path, as_attachment=True)
+@app.route('/download')
+def download_file():
+    # Retrieve the HTML content from the query parameter
+    html_content = request.args.get('html', '')
+    
+    # Create a response with the HTML content
+    response = make_response(html_content)
+    
+    # Set the appropriate headers for file download
+    response.headers["Content-Disposition"] = "attachment; filename=resume.html"
+    response.headers["Content-Type"] = "text/html"
+    
+    return response
 
 if __name__ == '__main__':
     app.run(debug=True)

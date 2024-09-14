@@ -8,11 +8,12 @@
 </head>
 <body>
     <h1>Resume Preview</h1>
-    
-    <div class="preview-container">
-        {{ resume_html|safe }}
+    <div id="resume-preview">
+        {{ resume_html | safe }}
     </div>
-
-    <a href="{{ url_for('download_file', filename=download_link) }}">Download HTML Resume</a>
+    <form action="{{ url_for('download_file') }}" method="get">
+        <input type="hidden" name="html" value="{{ resume_html | escape }}">
+        <button type="submit">Download HTML</button>
+    </form>
 </body>
 </html>
